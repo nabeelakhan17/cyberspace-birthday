@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyberspace // Us</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="crt"></div>
+<div class="vignette"></div>
+<div class="warp-flash" id="warpFlash"></div>
+<div class="hearts-layer" id="heartsLayer"></div>
+<button class="sound-toggle" id="soundToggle">🔊</button>
+
+<div id="screen-intro">
+  <div class="celebration-layer" id="celebrationLayer"></div>
+  <div class="phone-scene">
+    <div class="flip-phone">
+      <div class="phone-lid" id="phoneLid">
+        <div class="phone-screen">
+          <div class="phone-screen-text" id="phoneScreenText">HAPPY<br>BIRTHDAY<br>TAARIQ!</div>
+        </div>
+      </div>
+      <div class="phone-body">
+        <div class="phone-keys">
+          <div></div><div></div><div></div>
+          <div></div><div></div><div></div>
+          <div></div><div></div><div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tap-prompt" id="tapPrompt">TAP TO BEGIN</div>
+</div>
+
+<!-- HUB -->
+<section class="screen" id="screen-hub">
+  <div class="eyebrow" style="text-align:center;color:var(--blue);font-size:10px;letter-spacing:2px;margin-bottom:10px;">LOADING SAVE FILE...</div>
+  <h1 class="title-main">CYBERSPACE // US</h1>
+  <p class="subtitle">a two-player world, built one level at a time</p>
+
+  <div class="players">
+    <div class="player">
+      <div class="swatch" style="background:var(--blue)"></div>
+      <div class="player-label">PLAYER ONE</div>
+      <div class="player-name" id="p1Name">Player One</div>
+    </div>
+    <div class="player">
+      <div class="swatch" style="background:var(--purple)"></div>
+      <div class="player-label">PLAYER TWO</div>
+      <div class="player-name" id="p2Name">Taariq</div>
+    </div>
+  </div>
+
+  <div class="map-shell">
+    <div class="hub-bg" id="hubMap">
+      <div class="cabinet" data-x="90" data-y="430" data-screen="screen-book">
+        <div class="icon">💌</div><div class="label">BIRTHDAY CARD</div><div class="enter-hint">▶ ENTER</div>
+        <div class="pellet"></div>
+      </div>
+      <div class="cabinet" data-x="230" data-y="160" data-screen="screen-quest" data-tab-index="0">
+        <div class="icon">🎬</div><div class="label">WATCH PARTY</div><div class="enter-hint">▶ ENTER</div>
+        <div class="pellet"></div>
+      </div>
+      <div class="cabinet" data-x="380" data-y="380" data-screen="screen-quest" data-tab-index="1">
+        <div class="icon">📚</div><div class="label">READING QUEST</div><div class="enter-hint">▶ ENTER</div>
+        <div class="pellet"></div>
+      </div>
+      <div class="cabinet" data-x="500" data-y="140" data-screen="screen-quest" data-tab-index="2">
+        <div class="icon">🍜</div><div class="label">TASTE MAP</div><div class="enter-hint">▶ ENTER</div>
+        <div class="pellet"></div>
+      </div>
+      <div class="cabinet" data-x="620" data-y="330" data-screen="screen-quest" data-tab-index="3">
+        <div class="icon">☕</div><div class="label">CAFE RUN</div><div class="enter-hint">▶ ENTER</div>
+        <div class="pellet"></div>
+      </div>
+      <div class="cabinet" data-x="700" data-y="110" data-screen="screen-quest" data-tab-index="4">
+        <div class="icon">🌸</div><div class="label">SCENT VAULT</div><div class="enter-hint">▶ ENTER</div>
+        <div class="pellet"></div>
+      </div>
+      <div class="cabinet" data-x="710" data-y="450" data-screen="screen-quest" data-tab-index="5">
+        <div class="icon">🎯</div><div class="label">QUEST LOG</div><div class="enter-hint">▶ ENTER</div>
+        <div class="pellet"></div>
+      </div>
+
+      <div class="player-duo" id="player" style="left:90px; top:330px;">
+        <div class="facing" id="facing">
+          <div class="pac-rot"><div class="pacman" id="pac1" style="--pc:var(--blue)"></div></div>
+          <div class="pac-rot"><div class="pacman" id="pac2" style="--pc:var(--purple)"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="controls-hint">◀ ▲ ▼ ▶ or WASD to walk — walk onto any cabinet to eat its pellet and warp in. come back as often as you like.</p>
+  <p class="storage-note">tap either name above to edit it. everything you both add is saved and shared between you.</p>
+</section>
+
+<!-- BIRTHDAY CARD -->
+<section class="screen" id="screen-book">
+  <button class="back-btn" data-back>◀ BACK TO HUB</button>
+  <h1 class="title-main">🎉 HAPPY BIRTHDAY, TAARIQ 🎉</h1>
+  <p class="subtitle">a card that keeps getting new pages — reasons I love you, written inside</p>
+
+  <div id="bookLoading" class="loading-state">loading your card...</div>
+
+  <div id="bookContent" style="display:none;">
+    <div class="book-wrap" id="bookWrap">
+      <div class="card" id="bdayCard">
+        <div class="card-ribbon"></div>
+        <div class="card-inside">
+          <div class="page left">
+            <div class="card-icon">🎂</div>
+            <div class="card-cover-title">HAPPY<br>BIRTHDAY</div>
+            <div class="card-cover-name">TAARIQ</div>
+            <div class="reason-tag" id="reasonTag">reason 1 of 1</div>
+          </div>
+          <div class="page right">
+            <div class="slide-label" id="slideLabel"></div>
+            <div class="slide-text" id="slideText"></div>
+            <div class="slide-quote" id="slideQuote"></div>
+            <div class="page-nav">
+              <button class="nav-btn" id="prevReason">◀ PREV</button>
+              <div class="progress-bar"><div class="progress-fill" id="reasonProgress"></div></div>
+              <button class="nav-btn" id="nextReason">NEXT ▶</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-cover" id="cardCover">
+          <div class="card-icon">🎂</div>
+          <div class="card-cover-title">HAPPY<br>BIRTHDAY</div>
+          <div class="card-cover-name">TAARIQ</div>
+          <div class="tap-open-hint">▶ TAP TO OPEN</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="reasonToast">
+      <div class="badge">💌</div>
+      <div>
+        <div class="msg">NEW REASON ADDED!</div>
+        <div class="sub" id="reasonToastSub"></div>
+      </div>
+    </div>
+
+    <button class="add-toggle" id="showReasonForm">+ ADD A REASON</button>
+    <form class="add-form" id="reasonForm">
+      <textarea id="reasonInput" placeholder="the reason..." required></textarea>
+      <button type="submit">SAVE</button>
+    </form>
+  </div>
+</section>
+
+<!-- QUEST LOG (movies / books / restaurants / cafes / perfumes / goals) -->
+<section class="screen" id="screen-quest">
+  <button class="back-btn" data-back>◀ BACK TO HUB</button>
+  <h1 class="title-main">QUEST LOG</h1>
+  <p class="subtitle">one shared list per category</p>
+
+  <div class="cat-tabs" id="catTabs"></div>
+
+  <div class="journal-header">
+    <h3 id="catHeaderTitle"></h3>
+    <span class="journal-count" id="catCount"></span>
+  </div>
+
+  <div id="questLoading" class="loading-state">loading...</div>
+  <div id="questEmpty" class="empty-state" style="display:none;"></div>
+  <div class="quest-list" id="questList"></div>
+
+  <button class="add-toggle" id="showQuestForm">+ ADD NEW</button>
+  <form class="add-form" id="questForm">
+    <input type="text" id="questTitle" placeholder="name" required>
+    <input type="text" id="questNote" placeholder="note (optional)">
+    <button type="submit">SAVE</button>
+  </form>
+</section>
+
+<footer>your world — keep adding to it whenever you want</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
