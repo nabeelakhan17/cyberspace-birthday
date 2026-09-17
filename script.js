@@ -227,7 +227,7 @@ Happy happy birthday again my love inshallah I can not wait to celebrate with yo
     cafes:       ['Cafe Olivia', 'The Wild Detectives', 'The Kilo Coffee', 'Hyphen - Space', 'Cafe Maiko'].map(seedEntry),
     perfumes:    ['Dior Tobacolor', 'Il Padrino (Sospiro)', 'Pegasus (PDM)', 'Hibiscus Mahajad'].map(seedEntry),
     books:       ['The Odyssey'].map(seedEntry),
-    goals:       ['Become husband and wife forever'].map(seedEntry)
+    goals:       ['Become husband and wife forever ❤️'].map(seedEntry)
   };
 
   const questCache = {};
@@ -485,12 +485,26 @@ Happy happy birthday again my love inshallah I can not wait to celebrate with yo
 
   /* ---------- chiptune music engine (original loop, not a real song) ---------- */
   let audioCtx = null, musicGain = null, musicMuted = false, musicRunning = false;
-  let nextNoteTime = 0, melodyStep = 0, schedulerId = null;
-  const MELODY = [
-    523.25,659.25,783.99,1046.50,783.99,659.25,523.25,659.25,
-    587.33,698.46,880.00,1174.66,880.00,698.46,587.33,440.00
+  let nextNoteTime = 0, melodyStep = 0;
+  let nextChordTime = 0, chordStep = 0;
+
+  // an original I–V–vi–IV progression in C major — the pad + bass retrigger together
+  // on each chord so the harmony actually moves instead of a single static drone.
+  const CHORDS = [
+    { tones:[261.63,329.63,392.00], bass:65.41,  dur:2.0 }, // C
+    { tones:[392.00,493.88,587.33], bass:98.00,  dur:2.0 }, // G
+    { tones:[440.00,523.25,659.25], bass:110.00, dur:2.0 }, // Am
+    { tones:[349.23,440.00,523.25], bass:87.31,  dur:2.0 }  // F
   ];
-  const NOTE_DUR = 0.16;
+
+  // an original 4-bar melody with real phrasing (mixed note lengths, not a flat
+  // arpeggio), timed so each phrase lands on a chord tone as the harmony changes.
+  const MELODY = [
+    {f:392.00,d:0.5},{f:659.25,d:0.5},{f:587.33,d:0.25},{f:659.25,d:0.25},{f:783.99,d:0.5},
+    {f:493.88,d:0.5},{f:587.33,d:0.5},{f:523.25,d:0.25},{f:493.88,d:0.25},{f:392.00,d:0.5},
+    {f:523.25,d:0.5},{f:440.00,d:0.5},{f:659.25,d:0.25},{f:523.25,d:0.25},{f:440.00,d:0.5},
+    {f:440.00,d:0.5},{f:349.23,d:0.5},{f:523.25,d:0.25},{f:440.00,d:0.25},{f:349.23,d:0.5}
+  ];
 
   function ensureAudio(){
     if (!audioCtx){
@@ -519,29 +533,61 @@ Happy happy birthday again my love inshallah I can not wait to celebrate with yo
     osc.stop(startTime + duration + 0.02);
   }
 
+  function playChord(chord, startTime){
+    const dur = chord.dur;
+    chord.tones.forEach(freq => {
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.value = freq;
+      g.gain.setValueAtTime(0.0001, startTime);
+      g.gain.linearRampToValueAtTime(0.05, startTime + 0.3);
+      g.gain.linearRampToValueAtTime(0.05, startTime + dur - 0.3);
+      g.gain.linearRampToValueAtTime(0.0001, startTime + dur);
+      osc.connect(g);
+      g.connect(musicGain);
+      osc.start(startTime);
+      osc.stop(startTime + dur + 0.05);
+    });
+    const bassOsc = audioCtx.createOscillator();
+    const bassGain = audioCtx.createGain();
+    bassOsc.type = 'sine';
+    bassOsc.frequency.value = chord.bass;
+    bassGain.gain.setValueAtTime(0.0001, startTime);
+    bassGain.gain.linearRampToValueAtTime(0.09, startTime + 0.05);
+    bassGain.gain.linearRampToValueAtTime(0.0001, startTime + dur - 0.05);
+    bassOsc.connect(bassGain);
+    bassGain.connect(musicGain);
+    bassOsc.start(startTime);
+    bassOsc.stop(startTime + dur + 0.05);
+  }
+
   function schedulerLoop(){
     if (!musicRunning) return;
-    while (nextNoteTime < audioCtx.currentTime + 0.2){
-      playTone(MELODY[melodyStep % MELODY.length], nextNoteTime, NOTE_DUR * 0.9, 'square', 0.5);
-      nextNoteTime += NOTE_DUR;
+    const lookahead = audioCtx.currentTime + 0.2;
+    while (nextNoteTime < lookahead){
+      const note = MELODY[melodyStep % MELODY.length];
+      playTone(note.f, nextNoteTime, note.d * 0.9, 'square', 0.35);
+      nextNoteTime += note.d;
       melodyStep++;
     }
-    schedulerId = setTimeout(schedulerLoop, 50);
+    while (nextChordTime < lookahead){
+      const chord = CHORDS[chordStep % CHORDS.length];
+      playChord(chord, nextChordTime);
+      nextChordTime += chord.dur;
+      chordStep++;
+    }
+    setTimeout(schedulerLoop, 50);
   }
 
   function startMusic(){
     if (!ensureAudio() || musicRunning) return;
     musicRunning = true;
     nextNoteTime = audioCtx.currentTime + 0.05;
+    nextChordTime = audioCtx.currentTime + 0.05;
+    melodyStep = 0;
+    chordStep = 0;
     schedulerLoop();
-
-    const padGain = audioCtx.createGain();
-    padGain.gain.value = 0.05;
-    padGain.connect(musicGain);
-    const pad1 = audioCtx.createOscillator(); pad1.type = 'triangle'; pad1.frequency.value = 130.81;
-    const pad2 = audioCtx.createOscillator(); pad2.type = 'triangle'; pad2.frequency.value = 196.00;
-    pad1.connect(padGain); pad2.connect(padGain);
-    pad1.start(); pad2.start();
   }
 
   const soundToggle = document.getElementById('soundToggle');
