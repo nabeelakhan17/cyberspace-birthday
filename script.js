@@ -226,7 +226,8 @@ Happy happy birthday again my love inshallah I can not wait to celebrate with yo
     restaurants: ['Normans', 'Stella', 'Masume'].map(seedEntry),
     cafes:       ['Cafe Olivia', 'The Wild Detectives', 'The Kilo Coffee', 'Hyphen - Space', 'Cafe Maiko'].map(seedEntry),
     perfumes:    ['Dior Tobacolor', 'Il Padrino (Sospiro)', 'Pegasus (PDM)', 'Hibiscus Mahajad'].map(seedEntry),
-    books:       ['The Odyssey'].map(seedEntry)
+    books:       ['The Odyssey'].map(seedEntry),
+    goals:       ['Become husband and wife forever'].map(seedEntry)
   };
 
   const questCache = {};
