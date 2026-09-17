@@ -229,34 +229,34 @@ Happy birthday, my pretty boy. I love you more than words could ever explain. Ma
   }
   const DEFAULT_ENTRIES = {
     movies: seedDone([
-      ['Odyssey', 'Our best move amazing movie watch together, our first 70 MM'],
-      ['Hamlet', 'One of my favorite movies we watched together'],
-      ['Bulgonia', 'Fun film we watched'],
-      ['Obsession', 'That shit wasn’t even scary']
+      ['Odyssey', 'The best movie we’ve ever watched together — our very first 70mm, and a night I’ll never forget sharing with you'],
+      ['Hamlet', 'One of my favorite movies we’ve ever watched together — I still think about it'],
+      ['Bulgonia', 'A random pick that turned into one of our funniest movie nights together'],
+      ['Obsession', 'We went in bracing for scary and just ended up laughing — that thing wasn’t even scary']
     ]),
     restaurants: seedDone([
-      ['Charles', 'Our first 6 months anniversary together'],
-      ['Mister Charles', 'Our first birthday dinner together'],
-      ['Sister', 'Our 1.5 anniversary together'],
-      ['Saint Martin', 'OUr 2 year anniversaryry together'],
-      ['El Canto', 'Our 3 year anniversary celebration together'],
-      ['Taco La Banqueta', 'Life changing tacos for real, the best in the game.']
+      ['Charles', 'Where we celebrated our first six months together — the start of everything'],
+      ['Mister Charles', 'Our very first birthday dinner together, and the first of so many more to come'],
+      ['Sister', 'Where we marked a year and a half together, still just as in love'],
+      ['Saint Martin', 'Our two-year anniversary dinner — two years in and still falling deeper for you'],
+      ['El Canto', 'Where we celebrated three years together, and three years of the best memories of my life'],
+      ['Taco La Banqueta', 'Life-changing tacos, for real, the best in the game — one of our favorite little rituals together']
     ]),
     cafes: seedDone([
-      ['Wild Detectives', 'Our first favorite coffee shop together'],
-      ['Turbo', 'Our favorite coffee shop together to play some games for us'],
-      ['Sweet Hut Bakery', 'Our new favorite boba spot'],
-      ['Habitat', 'Our best most recent find'],
-      ['Ottos', 'Our favorite late night vibe'],
-      ['Buzz and Bustle', 'Our favorite studying spot']
+      ['Wild Detectives', 'The very first coffee shop we made ours — chai lattes and hours that flew by'],
+      ['Turbo', 'Our favorite spot to grab coffee and play games together for hours'],
+      ['Sweet Hut Bakery', 'Our newest favorite boba spot, already full of good memories'],
+      ['Habitat', 'Our best recent find, and already one of our favorite places to be together'],
+      ['Ottos', 'Our go-to for the best late-night vibes together'],
+      ['Buzz and Bustle', 'Our favorite spot to study side by side']
     ]),
     perfumes: seedDone([
-      ['Pegasus', 'OG perfume that made me fall in love'],
-      ['Intense Cafe', 'My favorite OG perfume that you gave me'],
-      ['Stronger With You', 'OG strong perfume'],
-      ['Jamaican Tobacco', 'I miss her for real'],
-      ['Gris Chanel Extrait', 'My new favaorite one you'],
-      ['Moon Light Pathclou Van Cleef', 'I miss her fr bring her back, she was one of my favorites']
+      ['Pegasus', 'The OG scent that made me fall in love with you all over again every time I smell it'],
+      ['Intense Cafe', 'My favorite perfume you’ve ever given me — I think of you every time I wear it'],
+      ['Stronger With You', 'One of your OG signature scents, strong and unmistakably you'],
+      ['Jamaican Tobacco', 'I genuinely miss this one — we need to bring her back'],
+      ['Gris Chanel Extrait', 'My new favorite, one you picked out for me, and I’ve been obsessed ever since'],
+      ['Moon Light Pathclou Van Cleef', 'I miss her for real, bring her back — she was one of my all-time favorites']
     ]),
     books: ['The Odyssey'].map(t => seedEntry(t)),
     goals: ['Become husband and wife forever ❤️'].map(t => seedEntry(t))
