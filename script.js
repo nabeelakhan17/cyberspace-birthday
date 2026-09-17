@@ -214,16 +214,52 @@ Happy birthday, my pretty boy. I love you more than words could ever explain. Ma
     { key:'perfumes',    tabIcon:'🌸', tabLabel:'Perfumes',    itemIcon:'🌸', doneLabel:'FAVORITE',     queuedLabel:'WISHLIST',    emptyText:'no perfumes added yet.' },
     { key:'goals',       tabIcon:'🎯', tabLabel:'Goals',       itemIcon:'🎯', doneLabel:'ACHIEVED',     queuedLabel:'IN PROGRESS', emptyText:'no goals added yet.' }
   ];
-  function seedEntry(title){
-    return { id: 'seed-' + title.toLowerCase().replace(/[^a-z0-9]+/g, '-'), title: title, note: '', status: 'queued' };
+  function seedEntry(title, reason, status){
+    return {
+      id: 'seed-' + title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      title: title,
+      note: reason || '',
+      status: status || 'queued'
+    };
+  }
+  // [title, reason] pairs for things you've already done together — marked "done" since
+  // the reason is the memory, not a to-do.
+  function seedDone(pairs){
+    return pairs.map(([title, reason]) => seedEntry(title, reason, 'done'));
   }
   const DEFAULT_ENTRIES = {
-    movies:      ['The Last Kingdom (movie)', 'Peaky Blinders (movie)', 'The Pianist', 'Demon Slayer (movie)'].map(seedEntry),
-    restaurants: ['Normans', 'Stella', 'Masume'].map(seedEntry),
-    cafes:       ['Cafe Olivia', 'The Wild Detectives', 'The Kilo Coffee', 'Hyphen - Space', 'Cafe Maiko'].map(seedEntry),
-    perfumes:    ['Dior Tobacolor', 'Il Padrino (Sospiro)', 'Pegasus (PDM)', 'Hibiscus Mahajad'].map(seedEntry),
-    books:       ['The Odyssey'].map(seedEntry),
-    goals:       ['Become husband and wife forever ❤️'].map(seedEntry)
+    movies: seedDone([
+      ['Odyssey', 'Our best move amazing movie watch together, our first 70 MM'],
+      ['Hamlet', 'One of my favorite movies we watched together'],
+      ['Bulgonia', 'Fun film we watched'],
+      ['Obsession', 'That shit wasn’t even scary']
+    ]),
+    restaurants: seedDone([
+      ['Charles', 'Our first 6 months anniversary together'],
+      ['Mister Charles', 'Our first birthday dinner together'],
+      ['Sister', 'Our 1.5 anniversary together'],
+      ['Saint Martin', 'OUr 2 year anniversaryry together'],
+      ['El Canto', 'Our 3 year anniversary celebration together'],
+      ['Taco La Banqueta', 'Life changing tacos for real, the best in the game.']
+    ]),
+    cafes: seedDone([
+      ['Wild Detectives', 'Our first favorite coffee shop together'],
+      ['Turbo', 'Our favorite coffee shop together to play some games for us'],
+      ['Sweet Hut Bakery', 'Our new favorite boba spot'],
+      ['Habitat', 'Our best most recent find'],
+      ['Ottos', 'Our favorite late night vibe'],
+      ['Buzz and Bustle', 'Our favorite studying spot']
+    ]),
+    perfumes: seedDone([
+      ['Pegasus', 'OG perfume that made me fall in love'],
+      ['Intense Cafe', 'My favorite OG perfume that you gave me'],
+      ['Stronger With You', 'OG strong perfume'],
+      ['Jamaican Tobacco', 'I miss her for real'],
+      ['Gris Chanel Extrait', 'My new favaorite one you'],
+      ['Moon Light Pathclou Van Cleef', 'I miss her fr bring her back, she was one of my favorites']
+    ]),
+    books: ['The Odyssey'].map(t => seedEntry(t)),
+    goals: ['Become husband and wife forever ❤️'].map(t => seedEntry(t))
   };
 
   const questCache = {};
@@ -282,12 +318,17 @@ Happy birthday, my pretty boy. I love you more than words could ever explain. Ma
         '<div class="quest-icon">' + cfg.itemIcon + '</div>' +
         '<div class="quest-body">' +
           '<div class="quest-title"></div>' +
-          '<div class="quest-note"></div>' +
+          '<div class="quest-reason"><span class="quest-reason-label">REASON</span><span class="quest-reason-text"></span></div>' +
         '</div>' +
         '<button class="quest-status ' + statusClass + '">' + (entry.status === 'done' ? '✓ ' : '') + statusLabel + '</button>' +
         '<button class="remove-btn" title="remove">✕</button>';
       card.querySelector('.quest-title').textContent = entry.title;
-      card.querySelector('.quest-note').textContent = entry.note || '';
+      const reasonEl = card.querySelector('.quest-reason');
+      if (entry.note){
+        card.querySelector('.quest-reason-text').textContent = entry.note;
+      } else {
+        reasonEl.style.display = 'none';
+      }
       card.querySelector('.quest-status').addEventListener('click', () => toggleStatus(entry.id));
       card.querySelector('.remove-btn').addEventListener('click', () => removeEntry(entry.id));
       listEl.appendChild(card);

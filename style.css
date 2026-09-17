@@ -253,7 +253,8 @@
   .quest-icon{ font-size:20px; width:32px; text-align:center; }
   .quest-body{ flex:1; min-width:0; }
   .quest-title{ font-size:15px; color:var(--text); font-weight:600; }
-  .quest-note{ font-size:12px; color:var(--text-dim); margin-top:4px; }
+  .quest-reason{ font-size:12px; color:var(--text-dim); margin-top:6px; font-style:italic; }
+  .quest-reason-label{ font-family:'Press Start 2P'; font-style:normal; font-size:8px; color:var(--pink); letter-spacing:0.5px; margin-right:8px; }
   .quest-status{ font-family:'Press Start 2P'; font-size:9px; padding:8px 10px; border-radius:2px; white-space:nowrap; cursor:pointer; border:1px solid var(--line); background:none; }
   .status-done{ color:#3ee08b; border-color:#3ee08b; }
   .status-queued{ color:var(--yellow); border-color:var(--yellow); }
