@@ -287,7 +287,18 @@ Happy birthday, my pretty boy. I love you more than words could ever explain. Ma
     document.getElementById('questForm').classList.remove('show');
 
     if (!(key in questCache)){
-      questCache[key] = await getJSON('entries:' + key, DEFAULT_ENTRIES[key] || []);
+      // seeded entries (id starts with "seed-") always refresh from the code's current
+      // defaults, so editing DEFAULT_ENTRIES here shows up for returning visitors too —
+      // only entries someone actually typed in through the app are kept from storage.
+      const stored = await getJSON('entries:' + key, null);
+      const defaults = DEFAULT_ENTRIES[key] || [];
+      if (stored === null){
+        questCache[key] = defaults;
+      } else {
+        const userAdded = stored.filter(e => !String(e.id).startsWith('seed-'));
+        questCache[key] = defaults.concat(userAdded);
+      }
+      await setJSON('entries:' + key, questCache[key]);
     }
     document.getElementById('questLoading').style.display = 'none';
     renderQuestList();
